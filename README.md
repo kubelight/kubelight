@@ -100,3 +100,14 @@ metadata:
 spec:
   credentials: <secret>
 ```
+
+### CLI reference
+
+```console
+kubelight claim <pool> <claim>
+kubelight release <claim>
+
+kubelight claims list
+kubelight pools list
+kubelight backends list
+```
