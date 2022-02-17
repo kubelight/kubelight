@@ -43,6 +43,7 @@ kind: Backend
 metadata:
   name: m93p-machines
 spec:
+  type: bare-metal
   machines:
     - host: server1.concaf
       credentials: server1-secret
@@ -88,6 +89,7 @@ kind: Backend
 metadata:
   name: gke-backend
 spec:
+  type: gke
   credentials: <secret>
   zone: us-central-1c
 ```
@@ -98,6 +100,7 @@ kind: Backend
 metadata:
   name: aws-backend
 spec:
+  type: aws
   credentials: <secret>
 ```
 
