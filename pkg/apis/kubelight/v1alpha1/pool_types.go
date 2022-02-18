@@ -72,6 +72,14 @@ type PoolSpec struct {
 type PoolConfig struct {
 	// Number of nodes to be run in one cluster
 	Nodes int `json:"nodes"`
+	// Resources required per cluster
+	Resources ClusterResources `json:"resources"`
+}
+
+type ClusterResources struct {
+	CPU    int    `json:"cpu"`
+	Memory string `json:"memory"`
+	Disk   string `json:"disk"`
 }
 
 type PoolBackend struct {
@@ -94,7 +102,6 @@ type PoolStatus struct {
 }
 
 // PoolList is a list of Pool resources
-//
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 type PoolList struct {
 	metav1.TypeMeta `json:",inline"`
