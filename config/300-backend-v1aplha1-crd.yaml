@@ -27,7 +27,7 @@ spec:
     plural: backends
     singular: backend
   preserveUnknownFields: false
-  scope: Cluster
+  scope: Namespaced
   versions:
     - name: v1alpha1
       served: true
