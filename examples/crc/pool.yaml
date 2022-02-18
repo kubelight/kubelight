@@ -1,0 +1,19 @@
+apiVersion: kubelight.dev/v1alpha1
+kind: Pool
+metadata:
+  name: openshift-dev-pool
+spec:
+  backends:
+    - name: m93p-machines
+      type: crc
+  count: 3
+  flavor:
+    name: openshift
+    version: 4.9.x
+  config:
+    nodes: 1
+    resources:
+      cpu: 2
+      memory: 16G
+      disk: 50G
+  strategy: aggressive

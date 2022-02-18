@@ -1,0 +1,17 @@
+apiVersion: kubelight.dev/v1alpha1
+kind: Backend
+metadata:
+  name: m93p-machines
+spec:
+  type: bare-metal
+  machines:
+    - host: server1.concaf
+      ssh-secret: server1-secret
+      wake-on-lan: true
+    - host: server2.concaf
+      ssh-secret: server2-secret
+      wake-on-lan: true
+    - host: server3.concaf
+      ssh-secret: server3-secret
+      wake-on-lan: true
+
