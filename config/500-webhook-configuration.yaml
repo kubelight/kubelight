@@ -15,7 +15,7 @@
 apiVersion: admissionregistration.k8s.io/v1
 kind: MutatingWebhookConfiguration
 metadata:
-  name: defaulting.webhook.kubelight.dev
+  name: defaulting.webhook.kubelight.kubelight.dev
   labels:
     kubelight.dev/release: devel
 webhooks:
@@ -27,12 +27,12 @@ webhooks:
       namespace: kubelight
   failurePolicy: Fail
   sideEffects: None
-  name: defaulting.webhook.kubelight.dev
+  name: defaulting.webhook.kubelight.kubelight.dev
 ---
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
-  name: validation.webhook.kubelight.dev
+  name: validation.webhook.kubelight.kubelight.dev
   labels:
     kubelight.dev/release: devel
 webhooks:
@@ -44,12 +44,12 @@ webhooks:
       namespace: kubelight
   failurePolicy: Fail
   sideEffects: None
-  name: validation.webhook.kubelight.dev
+  name: validation.webhook.kubelight.kubelight.dev
 ---
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
-  name: config.webhook.kubelight.dev
+  name: config.webhook.kubelight.kubelight.dev
   labels:
     kubelight.dev/release: devel
 webhooks:
@@ -61,7 +61,7 @@ webhooks:
       namespace: kubelight
   failurePolicy: Fail
   sideEffects: None
-  name: config.webhook.kubelight.dev
+  name: config.webhook.kubelight.kubelight.dev
   namespaceSelector:
     matchExpressions:
     - key: kubelight.dev/release
