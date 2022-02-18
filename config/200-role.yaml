@@ -15,10 +15,10 @@
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: knative-samples-namespace-rbac
-  namespace: knative-samples
+  name: kubelight-namespace-rbac
+  namespace: kubelight
   labels:
-    samples.knative.dev/release: devel
+    kubelight.dev/release: devel
 rules:
   # Needed to watch and load configuration and secret data.
   - apiGroups: [""]

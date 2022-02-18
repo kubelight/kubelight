@@ -15,23 +15,23 @@
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: knative-samples-admin
+  name: kubelight-admin
   labels:
-    samples.knative.dev/release: devel
+    kubelight.dev/release: devel
 aggregationRule:
   clusterRoleSelectors:
   - matchLabels:
-      samples.knative.dev/controller: "true"
+      kubelight.dev/controller: "true"
 rules: [] # Rules are automatically filled in by the controller manager.
 
 ---
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: knative-samples-core
+  name: kubelight-core
   labels:
-    samples.knative.dev/release: devel
-    samples.knative.dev/controller: "true"
+    kubelight.dev/release: devel
+    kubelight.dev/controller: "true"
 rules:
   # Allow creating events associated with resources we are controlling.
   - apiGroups: [""]
@@ -46,7 +46,7 @@ rules:
   - apiGroups: ["admissionregistration.k8s.io"]
     resources: ["validatingwebhookconfigurations"]
     verbs: ["get", "update"]
-    resourceNames: ["config.webhook.knative-samples.knative.dev", "validation.webhook.knative-samples.knative.dev"]
+    resourceNames: ["config.webhook.kubelight.dev", "validation.webhook.kubelight.dev"]
 
   # Allow the reconciliation of exactly our mutating webhooks.
   # This is needed for us to patch in caBundle information.
@@ -56,7 +56,7 @@ rules:
   - apiGroups: ["admissionregistration.k8s.io"]
     resources: ["mutatingwebhookconfigurations"]
     verbs: ["get", "update"]
-    resourceNames: ["defaulting.webhook.knative-samples.knative.dev"]
+    resourceNames: ["defaulting.webhook.kubelight.dev"]
 
   # Allow the reconciliation of exactly our CRDs.
   # This is needed for us to patch in conversion webhook information.
@@ -65,7 +65,7 @@ rules:
     verbs: ["list", "watch"]
 
   # Allow us to reconcile our resources.
-  - apiGroups: ["samples.knative.dev"]
+  - apiGroups: ["kubelight.dev"]
     resources: ["*"]
     verbs: ["get", "list", "update", "watch"]
 
@@ -74,4 +74,4 @@ rules:
   - apiGroups: [""]
     resources: ["namespaces"]
     verbs: ["get"]
-    resourceNames: ["knative-samples"]
+    resourceNames: ["kubelight"]

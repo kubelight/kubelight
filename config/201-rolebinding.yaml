@@ -15,15 +15,15 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: knative-samples-namespace-rbac
-  namespace: knative-samples
+  name: kubelight-namespace-rbac
+  namespace: kubelight
   labels:
-    samples.knative.dev/release: devel
+    kubelight.dev/release: devel
 subjects:
   - kind: ServiceAccount
     name: controller
-    namespace: knative-samples
+    namespace: kubelight
 roleRef:
   kind: Role
-  name: knative-samples-namespace-rbac
+  name: kubelight-namespace-rbac
   apiGroup: rbac.authorization.k8s.io

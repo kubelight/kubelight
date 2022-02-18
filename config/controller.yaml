@@ -16,9 +16,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: controller
-  namespace: knative-samples
+  namespace: kubelight
   labels:
-    samples.knative.dev/release: devel
+    kubelight.dev/release: devel
 spec:
   replicas: 1
   selector:
@@ -28,7 +28,7 @@ spec:
     metadata:
       labels:
         app: controller
-        samples.knative.dev/release: devel
+        kubelight.dev/release: devel
     spec:
       # To avoid node becoming SPOF, spread our replicas to different nodes.
       affinity:
@@ -67,7 +67,7 @@ spec:
         - name: CONFIG_OBSERVABILITY_NAME
           value: config-observability
         - name: METRICS_DOMAIN
-          value: knative.dev/samples
+          value: kubelight.dev/kubelight
 
         securityContext:
           allowPrivilegeEscalation: false

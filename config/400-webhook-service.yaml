@@ -17,9 +17,9 @@ kind: Service
 metadata:
   labels:
     role: webhook
-    samples.knative.dev/release: devel
+    kubelight.dev/release: devel
   name: webhook
-  namespace: knative-samples
+  namespace: kubelight
 spec:
   ports:
     - port: 443

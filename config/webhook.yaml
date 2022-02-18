@@ -16,9 +16,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: webhook
-  namespace: knative-samples
+  namespace: kubelight
   labels:
-    samples.knative.dev/release: devel
+    kubelight.dev/release: devel
 spec:
   replicas: 1
   selector:
@@ -30,7 +30,7 @@ spec:
       labels:
         app: webhook
         role: webhook
-        samples.knative.dev/release: devel
+        kubelight.dev/release: devel
     spec:
       # To avoid node becoming SPOF, spread our replicas to different nodes.
       affinity:
@@ -64,7 +64,7 @@ spec:
         - name: CONFIG_LOGGING_NAME
           value: config-logging
         - name: METRICS_DOMAIN
-          value: knative.dev/samples
+          value: kubelight.dev/kubelight
         - name: WEBHOOK_NAME
           value: webhook
 
