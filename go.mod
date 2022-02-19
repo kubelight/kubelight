@@ -3,7 +3,9 @@ module github.com/kubelight/kubelight
 go 1.15
 
 require (
+	github.com/linde12/gowol v0.0.0-20180926075039-797e4d01634c
 	go.uber.org/zap v1.19.1
+	golang.org/x/crypto v0.0.0-20210920023735-84f357641f63
 	k8s.io/api v0.22.5
 	k8s.io/apimachinery v0.22.5
 	k8s.io/client-go v0.22.5
