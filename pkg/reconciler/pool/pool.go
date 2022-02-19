@@ -18,22 +18,24 @@ package pool
 
 import (
 	"context"
-
-	samplesv1alpha1 "github.com/kubelight/kubelight/pkg/apis/kubelight/v1alpha1"
+	"github.com/kubelight/kubelight/pkg/apis/kubelight/v1alpha1"
 	poolreconciler "github.com/kubelight/kubelight/pkg/client/injection/reconciler/kubelight/v1alpha1/pool"
+	kubelightListers "github.com/kubelight/kubelight/pkg/client/listers/kubelight/v1alpha1"
 	"knative.dev/pkg/logging"
 	"knative.dev/pkg/reconciler"
 )
 
 // Reconciler implements poolreconciler.Interface for
 // Pool resources.
-type Reconciler struct{}
+type Reconciler struct {
+	backendLister kubelightListers.BackendLister
+}
 
 // Check that our Reconciler implements Interface
 var _ poolreconciler.Interface = (*Reconciler)(nil)
 
 // ReconcileKind implements Interface.ReconcileKind.
-func (r *Reconciler) ReconcileKind(ctx context.Context, o *samplesv1alpha1.Pool) reconciler.Event {
+func (r *Reconciler) ReconcileKind(ctx context.Context, o *v1alpha1.Pool) reconciler.Event {
 	logger := logging.FromContext(ctx)
 	logger.Info("Running reconcile loop for Pool")
 

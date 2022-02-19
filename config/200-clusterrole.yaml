@@ -33,6 +33,10 @@ metadata:
     kubelight.dev/release: devel
     kubelight.dev/controller: "true"
 rules:
+  - apiGroups: [ "" ]
+    resources: [ "secrets" ]
+    verbs: [ "get", "list", "watch" ]
+
   # Allow creating events associated with resources we are controlling.
   - apiGroups: [""]
     resources: ["events"]

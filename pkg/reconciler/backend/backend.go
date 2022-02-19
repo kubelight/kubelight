@@ -18,8 +18,9 @@ package backend
 
 import (
 	"context"
+	"k8s.io/client-go/kubernetes"
 
-	samplesv1alpha1 "github.com/kubelight/kubelight/pkg/apis/kubelight/v1alpha1"
+	"github.com/kubelight/kubelight/pkg/apis/kubelight/v1alpha1"
 	backendreconciler "github.com/kubelight/kubelight/pkg/client/injection/reconciler/kubelight/v1alpha1/backend"
 	"knative.dev/pkg/logging"
 	"knative.dev/pkg/reconciler"
@@ -27,16 +28,26 @@ import (
 
 // Reconciler implements backendreconciler.Interface for
 // Backend resources.
-type Reconciler struct{}
+type Reconciler struct {
+	// kubeClientSet allows us to talk to the k8s for core APIs
+	kubeClientSet kubernetes.Interface
+}
 
 // Check that our Reconciler implements Interface
 var _ backendreconciler.Interface = (*Reconciler)(nil)
 
 // ReconcileKind implements Interface.ReconcileKind.
-func (r *Reconciler) ReconcileKind(ctx context.Context, o *samplesv1alpha1.Backend) reconciler.Event {
+func (r *Reconciler) ReconcileKind(ctx context.Context, backend *v1alpha1.Backend) reconciler.Event {
 	logger := logging.FromContext(ctx)
 	logger.Info("Running reconcile loop for Backend")
 
-	o.Status.MarkServiceAvailable()
+	if backend.Spec.Type == v1alpha1.BackendTypeBareMetal {
+		// Make sure the backend is healthy
+		if err := backend.Init(ctx, r.kubeClientSet); err != nil {
+			return err
+		}
+	}
+
+	backend.Status.MarkBackendAvailable()
 	return nil
 }

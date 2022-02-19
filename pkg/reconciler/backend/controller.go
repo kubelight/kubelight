@@ -18,19 +18,21 @@ package backend
 
 import (
 	"context"
-
 	"knative.dev/pkg/configmap"
 	"knative.dev/pkg/controller"
 
 	backendinformer "github.com/kubelight/kubelight/pkg/client/injection/informers/kubelight/v1alpha1/backend"
 	backendreconciler "github.com/kubelight/kubelight/pkg/client/injection/reconciler/kubelight/v1alpha1/backend"
+	kubeclient "knative.dev/pkg/client/injection/kube/client"
 )
 
 // NewController creates a Reconciler and returns the result of NewImpl.
 func NewController(ctx context.Context, cmw configmap.Watcher) *controller.Impl {
 	backendInformer := backendinformer.Get(ctx)
 
-	r := &Reconciler{}
+	r := &Reconciler{
+		kubeClientSet: kubeclient.Get(ctx),
+	}
 	impl := backendreconciler.NewImpl(ctx, r)
 
 	backendInformer.Informer().AddEventHandler(controller.HandleAll(impl.Enqueue))

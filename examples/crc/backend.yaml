@@ -4,14 +4,17 @@ metadata:
   name: m93p-machines
 spec:
   type: bare-metal
+  wake-on-lan:
+    proxy: alfred.concaf
+    ssh-secret: wol-proxy
+    command: wakeonlan
   machines:
     - host: server1.concaf
       ssh-secret: server1-secret
-      wake-on-lan: true
+      wake-on-lan: 4c:cc:6a:3a:58:0a
     - host: server2.concaf
       ssh-secret: server2-secret
-      wake-on-lan: true
+      wake-on-lan: 6c:0b:84:0a:ea:6a
     - host: server3.concaf
       ssh-secret: server3-secret
-      wake-on-lan: true
-
+      wake-on-lan: d8:cb:8a:b3:40:90

@@ -24,7 +24,7 @@ import (
 var backendCondSet = apis.NewLivingConditionSet()
 
 // GetGroupVersionKind implements kmeta.OwnerRefable
-func (*Backend) GetGroupVersionKind() schema.GroupVersionKind {
+func (b *Backend) GetGroupVersionKind() schema.GroupVersionKind {
 	return SchemeGroupVersion.WithKind("Backend")
 }
 
@@ -38,13 +38,13 @@ func (bs *BackendStatus) InitializeConditions() {
 	backendCondSet.Manage(bs).InitializeConditions()
 }
 
-func (bs *BackendStatus) MarkServiceUnavailable(name string) {
+func (bs *BackendStatus) MarkBackendUnavailable() {
 	backendCondSet.Manage(bs).MarkFalse(
 		BackendConditionReady,
-		"ServiceUnavailable",
-		"Service %q wasn't found.", name)
+		"BackendUnavailable",
+		"BackendUnavailable")
 }
 
-func (bs *BackendStatus) MarkServiceAvailable() {
+func (bs *BackendStatus) MarkBackendAvailable() {
 	backendCondSet.Manage(bs).MarkTrue(BackendConditionReady)
 }

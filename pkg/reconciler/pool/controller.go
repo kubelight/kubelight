@@ -18,22 +18,42 @@ package pool
 
 import (
 	"context"
+	"github.com/kubelight/kubelight/pkg/apis/kubelight/v1alpha1"
+	backendinformers "github.com/kubelight/kubelight/pkg/client/injection/informers/kubelight/v1alpha1/backend"
+	"k8s.io/client-go/tools/cache"
+	"knative.dev/pkg/logging"
 
 	"knative.dev/pkg/configmap"
 	"knative.dev/pkg/controller"
 
-	poolinformer "github.com/kubelight/kubelight/pkg/client/injection/informers/kubelight/v1alpha1/pool"
+	poolinformers "github.com/kubelight/kubelight/pkg/client/injection/informers/kubelight/v1alpha1/pool"
 	poolreconciler "github.com/kubelight/kubelight/pkg/client/injection/reconciler/kubelight/v1alpha1/pool"
 )
 
 // NewController creates a Reconciler and returns the result of NewImpl.
 func NewController(ctx context.Context, cmw configmap.Watcher) *controller.Impl {
-	poolInformer := poolinformer.Get(ctx)
+	// Obtain an informer to both the main and child resources. These will be started by
+	// the injection framework automatically. They'll keep a cached representation of the
+	// cluster's state of the respective resource at all times.
+	logger := logging.FromContext(ctx)
+	logger.Info("Initializing Pool controller...")
+	poolInformer := poolinformers.Get(ctx)
+	backendInformer := backendinformers.Get(ctx)
 
-	r := &Reconciler{}
+	r := &Reconciler{
+		// We need to watch backends for a given pool
+		backendLister: backendInformer.Lister(),
+	}
 	impl := poolreconciler.NewImpl(ctx, r)
 
+	// Listen for events on the main resource and enqueue themselves.
 	poolInformer.Informer().AddEventHandler(controller.HandleAll(impl.Enqueue))
+
+	// Listen for events on the child resources and enqueue the owner of them.
+	backendInformer.Informer().AddEventHandler(cache.FilteringResourceEventHandler{
+		FilterFunc: controller.FilterController(&v1alpha1.Pool{}),
+		Handler:    controller.HandleAll(impl.EnqueueControllerOf),
+	})
 
 	return impl
 }

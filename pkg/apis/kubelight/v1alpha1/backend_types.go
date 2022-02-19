@@ -58,6 +58,17 @@ type BackendSpec struct {
 	Machines []Machine `json:"machines,omitempty"`
 	// Secret that contains GKE/AWS credentials
 	Secret string `json:"secret"`
+	// Wake on LAN proxy details
+	WakeOnLAN WakeOnLAN `json:"wake-on-lan"`
+}
+
+type WakeOnLAN struct {
+	// WOL proxy host
+	Proxy string `json:"proxy"`
+	// SSH credentials for the proxy
+	SSHSecret string `json:"ssh-secret"`
+	// Command to run for WOL
+	Command string `json:"command"`
 }
 
 type Machine struct {
@@ -66,7 +77,7 @@ type Machine struct {
 	// SSH credentials for the machine
 	SSHSecret string `json:"ssh-secret"`
 	// Should the machine be WOLed if it's down
-	WakeOnLan bool `json:"wake-on-lan"`
+	WakeOnLan string `json:"wake-on-lan"`
 }
 
 const (
